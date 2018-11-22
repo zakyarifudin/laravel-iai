@@ -3,4 +3,8 @@
 2. ketik di terminal/cmd : composer install
 4. ketik cp .env.example .env
 5. ketik php artisan key:generate
-3. selesai
+6. selesai
+
+Misal Habis diatas
+di composer install ya oke
+
