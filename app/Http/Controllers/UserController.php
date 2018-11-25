@@ -15,10 +15,10 @@ class UserController extends Controller
     }
 
     public function postLogin(Request $request)
-    {   
+    {
         $request = $request->except('_token');
         $response = MyHelper::postNoAuth('jwt/login', $request);
-        
+
         if(!isset($response['token'])){
             Alert::warning('Email atau password yang Anda masukkan salah', 'Gagal Login')->persistent('Tutup')->autoclose(3000);
             return redirect('/login');
@@ -26,6 +26,13 @@ class UserController extends Controller
 
         session([
             'access_token'  => 'Bearer '.$response['token']
+        ]);
+
+        $user = MyHelper::get('jwt/profile');
+
+        session([
+            'username'  => $user['username'],
+            'email'     => $user['email']
         ]);
 
         return 'login';
@@ -40,7 +47,7 @@ class UserController extends Controller
     {
         $request = $request->except('_token');
         $response = MyHelper::postNoAuth('user', $request);
-        
+
         if(isset($response['status']) && $response['status']=="success"){
             Alert::warning($response['message'], 'Success')->persistent('Tutup')->autoclose(3000);
             return redirect('/login');
@@ -54,7 +61,7 @@ class UserController extends Controller
             foreach($response as $each){
                 $message .= $each['message'] .', ' ;
             }
-            
+
             Alert::warning($message, 'Gagal')->persistent('Tutup');
             return redirect()->back();
         }
@@ -66,5 +73,5 @@ class UserController extends Controller
         return redirect('/login');
     }
 
-    
+
 }
