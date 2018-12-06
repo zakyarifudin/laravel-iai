@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
 use App\Lib\MyHelper;
 use Session;
@@ -12,6 +13,41 @@ class UserController extends Controller
     public function viewlogin()
     {
         return view('login');
+    }
+
+    /*
+        Login menggunakan $provider
+        e.x google, github, facebook
+    */
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        $user = Socialite::driver($provider)->user();
+        $authUser = $this->findOrCreateUser($user, $provider);
+        Auth::login($authUser, true);
+        return redirect('/');
+    }
+
+    public function findOrCreateUser($user, $provider)
+    {
+        $authUser = MyHelper::postNoAuth('user/find-or-create');
+        // $authUser = User::where('provider_id', $user->id)->first();
+        // if ($authUser) {
+        //     return $authUser;
+        // }
+        // else{
+        //     $data = User::create([
+        //         'name'     => $user->name,
+        //         'email'    => !empty($user->email)? $user->email : '' ,
+        //         'provider' => $provider,
+        //         'provider_id' => $user->id
+        //     ]);
+        //     return $data;
+        // }
     }
 
     public function postLogin(Request $request)
@@ -35,7 +71,7 @@ class UserController extends Controller
             'email'     => $user['email']
         ]);
 
-        return 'login';
+        return redirect()->route('question');
     }
 
     public function viewRegister()

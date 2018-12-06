@@ -9,11 +9,11 @@ Route::get('/login', 'UserController@viewLogin')->name('login');
 Route::post('/login', 'UserController@postLogin');
 
 //logout
-Route::get('/logout', 'UserController@logout');
+Route::get('/logout', 'UserController@logout')->name('logout');
 
 // register
 Route::get('/register', 'UserController@viewRegister')->name('register');
 Route::post('/register', 'UserController@postRegister');
 
 // question
-Route::get('/question', 'QuestionController@index');
+Route::get('/question', 'QuestionController@index')->name('question');

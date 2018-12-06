@@ -21,8 +21,8 @@
             <!-- <img src="{{ Config::get('chatter.headline_logo') }}"> -->
 
             <!-- jika tidak ada -->
-            <h1>A simple forum package for your Laravel app.</h1>
-            <p>A simple forum package for your Laravel app.</p>
+            <h1>Chatify</h1>
+            <p>A simple forum application.</p>
         </div>
 
 
@@ -56,38 +56,44 @@
                     <!-- SIDEBAR -->
                     <div class="chatter_sidebar">
                         <button class="btn btn-primary" id="new_discussion_btn"><i class="chatter-new"></i> New</button>
-                        <a href="#"><i class="chatter-bubble"></i> All </a>
+                        {{-- <a href="#"><i class="chatter-bubble"></i> All </a>
                         <ul class="nav nav-pills nav-stacked">
                             <li><a href="#"><div class="chatter-box"></div> Lorem ipsum</a></li>
-                        </ul>
+                        </ul> --}}
                     </div>
                     <!-- END SIDEBAR -->
                 </div>
                 <div class="col-md-9 right-column">
                     <div class="panel">
                         <ul class="discussions">
+                            @foreach ($data as $key => $post)
                                 <li>
                                     <a class="discussion_list" href="#">
                                         <div class="chatter_avatar">
-                                            <span class="chatter_avatar_circle" style="background-color:#321f">
-                                                J
+                                            <span class="chatter_avatar_circle" style="background-color:#321{{ $post['char'] }}">
+                                                {{ $post['char'] }}
                                             </span>
                                         </div>
 
                                         <div class="chatter_middle">
-                                            <h3 class="chatter_middle_title">Lorem Ipsum <div class="chatter_cat" style="background-color:#2421">Lorem ipsum</div></h3>
-                                            <span class="chatter_middle_details">Posted By: <span data-href="#">John Doe</span> 2 hours ago</span>
-                                            <p>Lorem ipsum dolor sit amet ...</p>
+                                            <h3 class="chatter_middle_title">
+                                                {{ $post['title'] }}
+                                                {{-- Label Category --}}
+                                                {{-- <div class="chatter_cat" style="background-color:#2421">Lorem ipsum</div> --}}
+                                            </h3>
+                                            <span class="chatter_middle_details">Posted By: <span data-href="#">{{ $post['username'] }}</span> {{ $post['created_at'] }}</span>
+                                            <p>{{ $post['description'] }} <strong>Read More</strong></p>
                                         </div>
 
                                         <div class="chatter_right">
 
-                                            <div class="chatter_count"><i class="chatter-bubble"></i> 20</div>
+                                            <div class="chatter_count"><i class="chatter-bubble"></i> {{ $post['comments'] }}</div>
                                         </div>
 
                                         <div class="chatter_clear"></div>
                                     </a>
                                 </li>
+                            @endforeach
                         </ul>
                     </div>
 

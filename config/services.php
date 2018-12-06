@@ -40,4 +40,21 @@ return [
         ],
     ],
 
+    /* Social Media */
+    'facebook' => [
+        'client_id'     => env('FB_ID'),
+        'client_secret' => env('FB_SECRET'),
+        'redirect'      => env('FB_URL'),
+    ],
+    'twitter' => [
+        'client_id'     => env('TWITTER_ID'),
+        'client_secret' => env('TWITTER_SECRET'),
+        'redirect'      => env('TWITTER_URL'),
+    ],
+    'google' => [
+        'client_id'     => '652275771260-9ecerduta9ip7drjqr4tou1eecp1o86u.apps.googleusercontent.com',
+        'client_secret' => 'edlRw8rSuVMVNucc4stzYCfE',
+        'redirect'      => 'https://chatify.dev/auth/google/callback',
+    ],
+
 ];
