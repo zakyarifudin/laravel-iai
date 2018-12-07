@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 
+<!--
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 4
 Author: KeenThemes
 Website: http://www.keenthemes.com/
@@ -16,13 +16,13 @@ License: You must have a valid license purchased only from themeforest(the above
 	<head>
 		<meta charset="utf-8" />
 		<title>
-			Buat Akun
+			Create Account
 		</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!--begin::Web font -->
-		
+
 		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
 		<script>
           WebFont.load({
@@ -80,16 +80,16 @@ License: You must have a valid license purchased only from themeforest(the above
 						<div class="m-login__signin">
 							<div class="m-login__head">
 								<h3 class="m-login__title">
-									Daftar
+									Register
 								</h3>
 								<div class="m-login__desc">
-									Isi form di bawah ini:
+									Please fill the form
 								</div>
 							</div>
 							<form class="m-login__form m-form" action="{{ URL::to('/register')}}" method="POST" >
 								{{ csrf_field() }}
 								<div class="form-group m-form__group @if ($errors->has('email')) has-danger @endif">
-									<input class="form-control m-input" type="email" placeholder="Email Anda" name="email" value="{{ old('email') }}" required>
+									<input class="form-control m-input" type="email" placeholder="Email" name="email" value="{{ old('email') }}" required>
                                     @if ($errors->has('email'))
                                         <div class="form-control-feedback">
                                             {{ $errors->first('email') }}
@@ -98,7 +98,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
 
                                 <div class="form-group m-form__group @if ($errors->has('username')) has-danger @endif" >
-									<input class="form-control m-input" type="text" placeholder="Nama Anda" name="username" value="{{ old('username') }}" required>
+									<input class="form-control m-input" type="text" placeholder="Name" name="username" value="{{ old('username') }}" required>
                                     @if ($errors->has('name'))
                                         <div class="form-control-feedback">
                                             {{ $errors->first('name') }}
@@ -115,7 +115,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     @endif
 								</div>
 
-								<div class="m-login__form-sub @if ($errors->has('agree')) has-danger @endif">
+								{{-- <div class="m-login__form-sub @if ($errors->has('agree')) has-danger @endif">
 									<label class="m-checkbox m-checkbox--focus  ">
 										<input type="checkbox" name="agree" value="agree">
 										Saya Setuju dengan
@@ -130,11 +130,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                             {{ $errors->first('agree') }}
                                         </div>
                                     @endif
-									<span class="m-form__help"></span>									
-								</div>
+									<span class="m-form__help"></span>
+								</div> --}}
 								<div class="m-login__form-action">
 									<button type="submit"  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
-										Daftar
+										Register
 									</button>
 								</div>
 							</form>
@@ -148,12 +148,12 @@ License: You must have a valid license purchased only from themeforest(the above
 		<script src="{!! asset('assets/demo/default/custom/components/inputmask/jquery.inputmask.bundle.js') !!}" type="text/javascript"></script>
 		<script src="{!! asset('assets/vendors/base/vendors.bundle.js') !!}" type="text/javascript"></script>
 		<script src="{!! asset('assets/demo/default/base/scripts.bundle.js') !!}" type="text/javascript"></script>
-		<!--end::Base Scripts -->   
+		<!--end::Base Scripts -->
         <!--begin::Page Snippets -->
 		<script src="{!! asset('assets/snippets/custom/pages/user/login.js') !!}" type="text/javascript"></script>
 		<!--end::Page Snippets -->
 		<script type="text/javascript">
-			
+
 			$('.phone').inputmask({
 				mask : "9999999999999",
 				suffix: "",

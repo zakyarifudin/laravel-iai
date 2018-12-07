@@ -68,7 +68,7 @@ class UserController extends Controller
 
             return $request;
         } else {
-            Alert::success('', 'Anda berhasil keluar')->persistent('Tutup')->autoclose(5000);
+            Alert::success('', 'Successfully logout')->persistent('Tutup')->autoclose(5000);
             return redirect()->back();
         }
     }
@@ -79,7 +79,7 @@ class UserController extends Controller
         $response = MyHelper::postNoAuth('jwt/login', $request);
 
         if(!isset($response['token'])){
-            Alert::warning('Email atau password yang Anda masukkan salah', 'Gagal Login')->persistent('Tutup')->autoclose(3000);
+            Alert::warning('Email or password invalid', 'Failed to Login')->persistent('Tutup')->autoclose(3000);
             return redirect('/login');
         }
 
@@ -129,7 +129,7 @@ class UserController extends Controller
 
     public function logout(){
         Session::flush();
-        Alert::success('', 'Anda berhasil keluar')->persistent('Tutup')->autoclose(5000);
+        Alert::success('', 'Successfully logout')->persistent('Tutup')->autoclose(5000);
         return redirect('/login');
     }
 

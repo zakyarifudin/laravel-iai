@@ -51,7 +51,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="m-login__content">
 								<div class="m-login__logo">
 									<a href="#">
-										<img src="{!! asset('assets/app/media/img//logos/logo-2.png') !!}">
+										{{-- <img src="{!! asset('assets/app/media/img//logos/logo-2.png') !!}"> --}}
 									</a>
 								</div>
 								<div class="m-login__title">
@@ -64,7 +64,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								</div>
 								<div class="m-login__form-action">
 									<a href="{{URL::to('/register')}}"  class="btn btn-outline-focus m-btn--pill">
-										Daftar Akun Baru
+										Sign Up
 									</a>
 								</div>
 							</div>
@@ -105,14 +105,14 @@ License: You must have a valid license purchased only from themeforest(the above
 
 								<div class="row m-login__form-sub">
 									<div class="col m--align-right">
-										<a href="{{URL::to('/forget')}}"  class="m-link">
+										{{-- <a href="{{URL::to('/forget')}}"  class="m-link">
 											Lupa Password ?
-										</a>
+										</a> --}}
 									</div>
 								</div>
 								<div class="m-login__form-action">
 									<button type="submit"  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
-										Masuk
+										Login
 									</button>
 									{{-- <a href="" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air btn-google"><i class="fa fa-google"></i> Google</a> --}}
 									<a href="{{ url('/auth/google') }}" class="btn btn-outline-danger m-btn m-btn--custom m-btn--icon m-btn--outline m-btn--pill m-btn--air">
