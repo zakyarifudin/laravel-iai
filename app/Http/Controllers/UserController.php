@@ -31,7 +31,7 @@ class UserController extends Controller
         $response = MyHelper::postNoAuth('jwt/login', $authUser);
 
         if(!isset($response['token'])){
-            Alert::warning('Something wrong', 'Failed to Login')->persistent('Tutup')->autoclose(3000);
+            Alert::warning('Something wrong', 'Failed to Login')->persistent('Close')->autoclose(3000);
             return redirect('/login');
         }
 
@@ -68,7 +68,7 @@ class UserController extends Controller
 
             return $request;
         } else {
-            Alert::success('', 'Successfully logout')->persistent('Tutup')->autoclose(5000);
+            Alert::success('', 'Successfully logout')->persistent('Close')->autoclose(5000);
             return redirect()->back();
         }
     }
@@ -79,7 +79,7 @@ class UserController extends Controller
         $response = MyHelper::postNoAuth('jwt/login', $request);
 
         if(!isset($response['token'])){
-            Alert::warning('Email or password invalid', 'Failed to Login')->persistent('Tutup')->autoclose(3000);
+            Alert::warning('Email or password invalid', 'Failed to Login')->persistent('Close')->autoclose(3000);
             return redirect('/login');
         }
 
@@ -109,11 +109,11 @@ class UserController extends Controller
         $response = MyHelper::postNoAuth('user', $request);
 
         if(isset($response['status']) && $response['status']=="success"){
-            Alert::warning($response['message'], 'Success')->persistent('Tutup')->autoclose(3000);
+            Alert::warning($response['message'], 'Success')->persistent('Close')->autoclose(3000);
             return redirect('/login');
         }
         else if(isset($response['status']) && $response['status']=="fail"){
-            Alert::warning($response['message'], 'Gagal')->persistent('Tutup')->autoclose(3000);
+            Alert::warning($response['message'], 'Failed')->persistent('Close')->autoclose(3000);
             return redirect()->back();
         }
         else{
@@ -122,14 +122,14 @@ class UserController extends Controller
                 $message .= $each['message'] .', ' ;
             }
 
-            Alert::warning($message, 'Gagal')->persistent('Tutup');
+            Alert::warning($message, 'Failed')->persistent('Close');
             return redirect()->back();
         }
     }
 
     public function logout(){
         Session::flush();
-        Alert::success('', 'Successfully logout')->persistent('Tutup')->autoclose(5000);
+        Alert::success('', 'Successfully logout')->persistent('Close')->autoclose(5000);
         return redirect('/login');
     }
 

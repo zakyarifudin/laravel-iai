@@ -52,7 +52,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="m-login__content">
 								<div class="m-login__logo">
 									<a href="#">
-										<img src="{!! asset('assets/app/media/img//logos/logo-2.png') !!}">
+										{{-- <img src="{!! asset('assets/app/media/img//logos/logo-2.png') !!}"> --}}
 									</a>
 								</div>
 								<div class="m-login__title">
@@ -136,6 +136,14 @@ License: You must have a valid license purchased only from themeforest(the above
 									<button type="submit"  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
 										Register
 									</button>
+									<a href="{{ url('/auth/google') }}" class="btn btn-outline-danger m-btn m-btn--custom m-btn--icon m-btn--outline m-btn--pill m-btn--air">
+										<span>
+											<i class="fa fa-google"></i>
+											<span>
+												With Google
+											</span>
+										</span>
+									</a>
 								</div>
 							</form>
 						</div>
