@@ -57,7 +57,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								</div>
 								<div class="m-login__title">
 									<h3>
-										QUEA
+										Chatify
 									</h3>
 								</div>
 								<div class="m-login__desc">
