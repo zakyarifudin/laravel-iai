@@ -67,6 +67,7 @@ class UserController extends Controller
         $user = MyHelper::get('jwt/profile');
 
         session([
+            'id_user'   => $user['id'],
             'username'  => $user['username'],
             'email'     => $user['email']
         ]);

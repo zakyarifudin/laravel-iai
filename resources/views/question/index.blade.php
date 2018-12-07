@@ -26,14 +26,16 @@
         </div>
 
 
-        <!-- <div class="chatter-alert alert alert-{{ Session::get('chatter_alert_type') }}">
-            <div class="container">
-                <strong><i class="chatter-alert-{{ Session::get('chatter_alert_type') }}"></i> {{ Config::get('chatter.alert_messages.' . Session::get('chatter_alert_type')) }}</strong>
-                {{ Session::get('chatter_alert') }}
-                <i class="chatter-close"></i>
-            </div>
-        </div>
-        <div class="chatter-alert-spacer"></div> -->
+        @if(Session::has('chatter_alert'))
+    		<div class="chatter-alert alert alert-{{ Session::get('chatter_alert_type') }}">
+    			<div class="container">
+    	        	<strong><i class="chatter-alert-{{ Session::get('chatter_alert_type') }}"></i> {{ Session::get('chatter_alert_messages') }}</strong>
+    	        	{{ Session::get('chatter_alert') }}
+    	        	<i class="chatter-close"></i>
+    	        </div>
+    	    </div>
+    	    <div class="chatter-alert-spacer"></div>
+    	@endif
 
         <!-- Alert -->
         <!-- <div class="chatter-alert alert alert-danger">
@@ -66,11 +68,11 @@
                 <div class="col-md-9 right-column">
                     <div class="panel">
                         <ul class="discussions">
-                            @foreach ($data as $key => $post)
+                            @foreach ($results as $key => $post)
                                 <li>
-                                    <a class="discussion_list" href="#">
+                                    <a class="discussion_list" href="{!! route('question.show', ['id' => $post['id']]) !!}">
                                         <div class="chatter_avatar">
-                                            <span class="chatter_avatar_circle" style="background-color:#321{{ $post['char'] }}">
+                                            <span class="chatter_avatar_circle" style="background-color:#{{ App\Lib\MyHelper::stringToColorCode($post['email']) }}">
                                                 {{ $post['char'] }}
                                             </span>
                                         </div>
@@ -98,7 +100,7 @@
                     </div>
 
                     <div id="pagination">
-
+                        {{ $results->withPath('')->links() }}
                     </div>
 
                 </div>
@@ -111,18 +113,19 @@
                 <div></div>
             </div>
 
-            <form id="chatter_form_editor" action="#" method="POST">
+            <form id="chatter_form_editor" action="{!! route('question.store') !!}" method="POST">
+                {{ csrf_field() }}
                 <div class="row">
                     <div class="col-md-7">
                         <!-- TITLE -->
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Title of" v-model="title" value="" >
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Title of" value="" >
                     </div>
 
                     <div class="col-md-4">
                         <!-- CATEGORY -->
-                            <select id="chatter_category_id" class="form-control" name="chatter_category_id">
+                            {{-- <select id="chatter_category_id" class="form-control" name="chatter_category_id">
                                 <option value="">Select a Category</option>
-                            </select>
+                            </select> --}}
                     </div>
 
                     <div class="col-md-1">
@@ -132,15 +135,13 @@
 
                 <!-- BODY -->
                 <div id="editor">
-                    <textarea id="simplemde" name="body" placeholder=""></textarea>
+                    <textarea class="trumbowyg" name="description" placeholder="Type Your Discussion Here...">{{ old('body') }}</textarea>
                 </div>
 
-                <input type="hidden" name="_token" id="csrf_token_field" value="">
-
                 <div id="new_discussion_footer">
-                    <input type='text' id="color" name="color" /><span class="select_color_text">Select a Color for this Discussion (optional)</span>
+                    {{-- <input type='text' id="color" name="color" /><span class="select_color_text">Select a Color for this Discussion (optional)</span> --}}
                     <button id="submit_discussion" class="btn btn-success pull-right"><i class="chatter-new"></i> Create </button>
-                    <a href="" class="btn btn-default pull-right" id="cancel_discussion">Cancel</a>
+                    <a href="#" class="btn btn-default pull-right" id="cancel_discussion">Cancel</a>
                     <div style="clear:both"></div>
                 </div>
             </form>
@@ -153,8 +154,9 @@
 @endsection
 
 @section('js')
-    <script src="{!! asset('assets/js/simplemde.min.js') !!}"></script>
-    <script src="{!! asset('assets/js/chatter_simplemde.js') !!}"></script>
+    <script src="{!! asset('assets/vendor/trumbowyg/trumbowyg.min.js') !!}"></script>
+	<script src="{!! asset('assets/vendor/trumbowyg/plugins/preformatted/trumbowyg.preformatted.min.js') !!}"></script>
+	<script src="{!! asset('assets/js/trumbowyg.js') !!}"></script>
 
     <script src="{!! asset('assets/vendor/spectrum/spectrum.js') !!}"></script>
     <script src="{!! asset('assets/js/chatter.js') !!}"></script>
@@ -166,9 +168,6 @@
                 $('#new_discussion').slideUp();
             });
             $('#new_discussion_btn, #cancel_discussion').click(function(){
-                // if guess
-                    // window.location.href = "/home/login";
-
                     $('#new_discussion').slideDown();
                     $('#title').focus();
 

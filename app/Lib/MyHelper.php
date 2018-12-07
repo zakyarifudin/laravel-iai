@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\URL;
 class MyHelper
 {
 
+  public static function stringToColorCode($string)
+  {
+      $code = dechex(crc32($string));
+
+      return substr($code, 0, 6);
+  }
+
   public static function encodeImage($image){
     if ($image != null){
       $size   = $image->getSize();
