@@ -18,7 +18,7 @@
 
 <div id="chatter" class="discussion">
 
-	<div id="chatter_header" style="background-color:#636b6f">
+	<div id="chatter_header" style="background-color:#263238">
 		<div class="container">
 			<a class="back_btn" href="{!! route('question') !!}"><i class="chatter-back"></i></a>
 			<h1>{{ $data["title"] }}</h1>

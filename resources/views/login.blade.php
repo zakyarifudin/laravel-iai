@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<!-- 
+<!--
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 4
 Author: KeenThemes
 Website: http://www.keenthemes.com/
@@ -56,7 +56,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								</div>
 								<div class="m-login__title">
 									<h3>
-										QUEA
+										Chatify
 									</h3>
 								</div>
 								<div class="m-login__desc">
@@ -85,7 +85,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<form class="m-login__form m-form" action="{{ URL::to('/login')}}" method="post">
                                 {{ csrf_field() }}
 								<div class="form-group m-form__group @if ($errors->has('email')) has-danger @endif">
-									<input class="form-control m-input" type="email" placeholder="Email Anda" name="email" value="" required>
+									<input class="form-control m-input" type="email" placeholder="Your Email" name="email" value="" required>
                                     @if ($errors->has('email'))
                                         <div class="form-control-feedback">
                                             {{ $errors->first('email') }}
@@ -94,7 +94,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
 
 								<div class="form-group m-form__group @if ($errors->has('password')) has-danger @endif">
-									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password Anda" name="password" required>
+									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Your Password" name="password" required>
                                     @if ($errors->has('password'))
                                         <div class="form-control-feedback">
                                             {{ $errors->first('password') }}
@@ -114,6 +114,15 @@ License: You must have a valid license purchased only from themeforest(the above
 									<button type="submit"  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
 										Masuk
 									</button>
+									{{-- <a href="" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air btn-google"><i class="fa fa-google"></i> Google</a> --}}
+									<a href="{{ url('/auth/google') }}" class="btn btn-outline-danger m-btn m-btn--custom m-btn--icon m-btn--outline m-btn--pill m-btn--air">
+										<span>
+											<i class="fa fa-google"></i>
+											<span>
+												With Google
+											</span>
+										</span>
+									</a>
 								</div>
 							</form>
 						</div>
@@ -125,7 +134,7 @@ License: You must have a valid license purchased only from themeforest(the above
     	<!--begin::Base Scripts -->
 		<script src="{!! asset('assets/vendors/base/vendors.bundle.js') !!}" type="text/javascript"></script>
 		<script src="{!! asset('assets/demo/default/base/scripts.bundle.js') !!}" type="text/javascript"></script>
-		<!--end::Base Scripts -->   
+		<!--end::Base Scripts -->
         <!--begin::Page Snippets -->
 		<script src="{!! asset('assets/snippets/custom/pages/user/login.js') !!}" type="text/javascript"></script>
 		<!--end::Page Snippets -->

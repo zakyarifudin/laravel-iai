@@ -8,6 +8,10 @@ Route::get('/', function () {
 Route::get('/login', 'UserController@viewLogin')->name('login')->middleware('isnotlogin');
 Route::post('/login', 'UserController@postLogin');
 
+// Socialite
+Route::get('auth/{provider}', 'UserController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'UserController@handleProviderCallback');
+
 //logout
 Route::get('/logout', 'UserController@logout')->name('logout')->middleware('islogin');
 
