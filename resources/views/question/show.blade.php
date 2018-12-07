@@ -142,7 +142,7 @@
 
             		<div class="chatter_avatar">
         				<span class="chatter_avatar_circle" style="background-color:#{{ App\Lib\MyHelper::stringToColorCode(Session::get('email')) }}">
-        					{{ ucfirst(substr($data['user']['username'], 0, 1)) }}
+        					{{ ucfirst(substr(Session::get('username'), 0, 1)) }}
         				</span>
 	        		</div>
 
