@@ -21,3 +21,8 @@ Route::get('/question/{id}', 'QuestionController@show')->name('question.show');
 Route::post('/question/store', 'QuestionController@store')->name('question.store');
 Route::put('/question/update/{id}', 'QuestionController@update')->name('question.update');
 Route::delete('/question/delete/{id}', 'QuestionController@destroy')->name('question.delete');
+
+// comment
+Route::post('/question/{id}/comment/store', 'CommentController@store')->name('comment.store');
+Route::put('/question/comment/update/{id}', 'CommentController@update')->name('comment.update');
+Route::delete('/question/comment/delete/{id}', 'CommentController@destroy')->name('comment.delete');

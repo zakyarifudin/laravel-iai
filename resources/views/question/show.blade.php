@@ -69,9 +69,11 @@
                                         <button class="btn btn-sm btn-default pull-right">No Thanks</button>
                                     </div>
                                     <div class="chatter_post_actions">
-                                        <p class="chatter_delete_btn">
-                                            <i class="chatter-delete"></i> Delete
-                                        </p>
+                                        @if (@count($data['comments'] ) == 0)
+                                            <p class="chatter_delete_btn">
+                                                <i class="chatter-delete"></i> Delete
+                                            </p>
+                                        @endif
                                         <p class="chatter_edit_btn">
                                             <i class="chatter-edit"></i> Edit
                                         </p>
@@ -95,19 +97,19 @@
                         </li>
                         @if (isset($data['comments']))
                             @foreach($data['comments'] as $post)
-                                <li class="comments" data-id="{{ $post['post_id'] }}" data-markdown="0">
+                                <li class="comments" data-id="{{ $post['id'] }}" data-markdown="0">
                                     <span class="chatter_posts">
                                         @if(Session::get('id_user') == $post['user_id'])
-                                            <div id="delete_warning_{{ $post['post_id'] }}" class="chatter_warning_delete">
+                                            <div id="delete_warning_{{ $post['id'] }}" class="chatter_warning_delete">
                                                 <i class="chatter-warning"></i>Are you sure you want to delete this?
-                                                <button class="btn btn-sm btn-danger pull-right delete_response">Yes Delete It</button>
+                                                <button class="btn btn-sm btn-danger pull-right delete_comment_response">Yes Delete It</button>
                                                 <button class="btn btn-sm btn-default pull-right">No Thanks</button>
                                             </div>
                                             <div class="chatter_post_actions">
-                                                <p class="chatter_delete_btn">
+                                                <p class="chatter_delete_comment_btn">
                                                     <i class="chatter-delete"></i> Delete
                                                 </p>
-                                                <p class="chatter_edit_btn">
+                                                <p class="chatter_edit_comment_btn">
                                                     <i class="chatter-edit"></i> Edit
                                                 </p>
                                             </div>
@@ -139,7 +141,7 @@
             	<div id="new_response">
 
             		<div class="chatter_avatar">
-        				<span class="chatter_avatar_circle" style="background-color:#{{ App\Lib\MyHelper::stringToColorCode($data['user']['email']) }}">
+        				<span class="chatter_avatar_circle" style="background-color:#{{ App\Lib\MyHelper::stringToColorCode(Session::get('email')) }}">
         					{{ ucfirst(substr($data['user']['username'], 0, 1)) }}
         				</span>
 	        		</div>
@@ -151,14 +153,14 @@
 						    <div></div>
 						</div>
 
-			            <form id="chatter_form_editor" action="#" method="POST">
+			            <form id="chatter_form_editor" action="{!! route('comment.store', ['id' => $data['id']]) !!}" method="POST">
+                            {{ csrf_field() }}
 
 					        <!-- BODY -->
 					    	<div id="editor">
-								<textarea class="trumbowyg" name="body" placeholder="Type Your Discussion Here...">{{ old('body') }}</textarea>
+								<textarea class="trumbowyg" name="comment" placeholder="Type Your Discussion Here...">{{ old('body') }}</textarea>
 							</div>
 
-					        <input type="hidden" name="_token" id="csrf_token_field" value="{{ csrf_token() }}">
 					        <input type="hidden" name="chatter_discussion_id" value="{{ $data["id"] }}">
 					    </form>
 
@@ -219,6 +221,34 @@
 
 		});
 
+        $('.chatter_edit_comment_btn').click(function(){
+			parent = $(this).parents('li');
+			parent.addClass('editing');
+			id = parent.data('id');
+			markdown = parent.data('markdown');
+			container = parent.find('.chatter_middle');
+
+			if(markdown){
+				body = container.find('.chatter_body_md');
+			} else {
+				body = container.find('.chatter_body');
+				markdown = 0;
+			}
+
+			details = container.find('.chatter_middle_details');
+
+			// dynamically create a new text area
+			container.prepend('<textarea id="post-edit-' + id + '"></textarea>');
+            // Client side XSS fix
+            $("#post-edit-"+id).text(body.html());
+			container.append('<div class="chatter_update_actions"><button class="btn btn-success pull-right update_chatter_edit_comment"  data-id="' + id + '" data-markdown="' + markdown + '"><i class="chatter-check"></i> Update Response</button><button href="/" class="btn btn-default pull-right cancel_chatter_edit_comment" data-id="' + id + '"  data-markdown="' + markdown + '">Cancel</button></div>');
+
+			// create new editor from text area
+
+            initializeNewTrumbowyg('post-edit-' + id);
+
+		});
+
         $('#question').on('click', '.cancel_chatter_edit', function(e){
 			post_id = $(e.target).data('id');
 			markdown = $(e.target).data('markdown');
@@ -247,7 +277,7 @@
 			$.form('update/' + post_id, { _token: '{{ csrf_token() }}', _method: 'PUT', 'description' : update_body }, 'POST').submit();
 		});
 
-		$('.comments').on('click', '.cancel_chatter_edit', function(e){
+		$('.comments').on('click', '.cancel_chatter_edit_comment', function(e){
 			post_id = $(e.target).data('id');
 			markdown = $(e.target).data('markdown');
 			parent_li = $(e.target).parents('li');
@@ -266,13 +296,13 @@
 			parent_li.removeClass('editing');
 		});
 
-		$('.comments').on('click', '.update_chatter_edit', function(e){
+		$('.comments').on('click', '.update_chatter_edit_comment', function(e){
 			post_id = $(e.target).data('id');
 			markdown = $(e.target).data('markdown');
 
             update_body = $('#post-edit-' + id).trumbowyg('html');
 
-			$.form('#' + post_id, { _token: '{{ csrf_token() }}', _method: 'PATCH', 'body' : update_body }, 'POST').submit();
+			$.form( 'comment/update/' + post_id, { _token: '{{ csrf_token() }}', _method: 'PUT', 'comment' : update_body }, 'POST').submit();
 		});
 
 		$('#submit_response').click(function(){
@@ -283,6 +313,7 @@
 		// DELETE FUNCTIONALITY
 		// ******************************
 
+        // Post
 		$('.chatter_delete_btn').click(function(){
 			parent = $(this).parents('li');
 			parent.addClass('delete_warning');
@@ -300,7 +331,23 @@
 			$.form('delete/' + post_id, { _token: '{{ csrf_token() }}', _method: 'DELETE'}, 'POST').submit();
 		});
 
+        // Comment
+        $('.chatter_delete_comment_btn').click(function(){
+			parent = $(this).parents('li');
+			parent.addClass('delete_warning');
+			id = parent.data('id');
+			$('#delete_warning_' + id).show();
+		});
 
+		$('.chatter_warning_delete .btn-default').click(function(){
+			$(this).parent('.chatter_warning_delete').hide();
+			$(this).parents('li').removeClass('delete_warning');
+		});
+
+		$('.delete_comment_response').click(function(){
+			post_id = $(this).parents('li').data('id');
+			$.form('comment/delete/' + post_id, { _token: '{{ csrf_token() }}', _method: 'DELETE'}, 'POST').submit();
+		});
 
 	});
 </script>

@@ -91,8 +91,10 @@ class QuestionController extends Controller
         $response = MyHelper::get('post/'.$id);
         $data = [];
 
-        if (isset($response['status'])  && $response['status'] == "success") {
+        if (isset($response['status'])  && $response['status'] == "success" && $response['result'] != null) {
             $data = $response['result'];
+        } else {
+            return redirect()->route('question');
         }
 
         return view('question.show', compact("data"));
